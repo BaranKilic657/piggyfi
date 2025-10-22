@@ -34,13 +34,13 @@ export const Footer: React.FC<FooterProps> = ({ theme = "base" }) => {
         </div>
 
         <div className="flex items-center gap-3">
-          <Pill tone="info" variant="soft" theme="base">
+          <Pill tone="info" variant="soft">
             Primary: #0052FF
           </Pill>
-          <Pill tone="info" variant="soft" theme="pink">
+          <Pill tone="info" variant="soft">
             Accent: #FF89C2
           </Pill>
-          <Pill tone="success" variant="soft" theme="mint">
+          <Pill tone="success" variant="soft">
             Success: #00C48C
           </Pill>
         </div>
