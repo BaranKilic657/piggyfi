@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 /**
  * Divider component
  * -------------------------------------------------
- * Flexible visual separator with theme & variant support
+ * Flexible visual separator with theme support
  */
 
 const dividerVariants = cva("", {
@@ -22,41 +22,17 @@ const dividerVariants = cva("", {
       lg: "h-[3px]",
     },
     variant: {
-      solid: "bg-[#E2E8F0]",
-      dashed: "border-t border-dashed border-[#CBD5E1]",
-      soft: "bg-[#F1F5F9]",
+      solid: "bg-[var(--color-border)]",
+      dashed: "border-t border-dashed border-[var(--color-border)]",
+      soft: "bg-[var(--color-border)]/50",
       gradient:
-        "bg-gradient-to-r from-transparent via-[#E2E8F0] to-transparent",
-    },
-    theme: {
-      base: "",
-      pink: "via-[#FF89C2]/60",
-      mint: "via-[#00C48C]/60",
-      dark: "via-[#475569]/60",
+        "bg-gradient-to-r from-transparent via-[var(--color-border)] to-transparent",
     },
   },
-  compoundVariants: [
-    {
-      variant: "gradient",
-      theme: "pink",
-      className: "bg-gradient-to-r from-transparent via-[#FF89C2]/50 to-transparent",
-    },
-    {
-      variant: "gradient",
-      theme: "mint",
-      className: "bg-gradient-to-r from-transparent via-[#00C48C]/50 to-transparent",
-    },
-    {
-      variant: "gradient",
-      theme: "dark",
-      className: "bg-gradient-to-r from-transparent via-[#475569]/50 to-transparent",
-    },
-  ],
   defaultVariants: {
     orientation: "horizontal",
     variant: "gradient",
     size: "md",
-    theme: "base",
   },
 });
 
@@ -68,7 +44,6 @@ export const Divider: React.FC<DividerProps> = ({
   orientation,
   variant,
   size,
-  theme,
   className,
   ...props
 }) => {
@@ -86,7 +61,7 @@ export const Divider: React.FC<DividerProps> = ({
         orientation === "horizontal"
           ? "my-6"
           : "mx-4 w-px h-auto self-stretch",
-        dividerVariants({ orientation, variant, size, theme }),
+        dividerVariants({ orientation, variant, size }),
         baseClass,
         className
       )}

@@ -82,39 +82,96 @@ export const CreatePiggybank: React.FC<CreateProps> = ({
   };
 
   return (
-    <section className="grid lg:grid-cols-3 gap-8">
-      {/* Form */}
+    <section
+      className="grid lg:grid-cols-3 gap-8 transition-colors duration-300"
+      style={{
+        color: "var(--color-text)",
+      }}
+    >
+      {/* Left: Form */}
       <div className="lg:col-span-2 space-y-6">
-        <div className="rounded-3xl bg-white border border-[#E2E8F0] shadow-sm p-6">
+        {/* Create Piggybank Card */}
+        <div
+          className="rounded-3xl shadow-sm border p-6 transition-colors duration-300"
+          style={{
+            backgroundColor: "var(--color-surface)",
+            borderColor: "var(--color-border)",
+          }}
+        >
           <div className="flex items-center justify-between">
-            <h2 className="text-xl font-bold text-[#0F172A]">Create a Piggybank</h2>
+            <h2
+              className="text-xl font-bold"
+              style={{ color: "var(--color-text)" }}
+            >
+              Create a Piggybank
+            </h2>
             <Pill>Entry stake: {formatEth(entry)}</Pill>
           </div>
           <Divider />
           <div className="grid md:grid-cols-2 gap-6">
             <Field label="Piggybank name" hint="Clear and playful works best">
-              <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="No-Curse November" />
+              <Input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="No-Curse November"
+              />
             </Field>
             <Field label="Theme / tagline" hint="Optional vibe line">
-              <Input value={theme} onChange={(e) => setTheme(e.target.value)} />
+              <Input
+                value={theme}
+                onChange={(e) => setTheme(e.target.value)}
+              />
             </Field>
             <Field label="Entry stake (ETH)" hint="Deposit per member">
-              <Input type="number" min={0.0001} step={0.001} value={entry} onChange={(e) => setEntry(parseFloat(e.target.value || "0"))} />
+              <Input
+                type="number"
+                min={0.0001}
+                step={0.001}
+                value={entry}
+                onChange={(e) => setEntry(parseFloat(e.target.value || "0"))}
+              />
             </Field>
           </div>
         </div>
 
-        {/* Members */}
-        <div className="rounded-3xl bg-white border border-[#E2E8F0] shadow-sm p-6 space-y-4">
-          <h3 className="text-lg font-semibold text-[#0F172A]">Members</h3>
+        {/* Members Card */}
+        <div
+          className="rounded-3xl shadow-sm border p-6 space-y-4 transition-colors duration-300"
+          style={{
+            backgroundColor: "var(--color-surface)",
+            borderColor: "var(--color-border)",
+          }}
+        >
+          <h3
+            className="text-lg font-semibold"
+            style={{ color: "var(--color-text)" }}
+          >
+            Members
+          </h3>
           <Divider />
           <MemberAdder onAdd={addMember} />
           <div className="grid sm:grid-cols-2 gap-4">
             {members.map((m) => (
-              <div key={m.id} className="flex items-center gap-3 rounded-2xl border border-[#E2E8F0] p-3">
+              <div
+                key={m.id}
+                className="flex items-center gap-3 rounded-2xl border p-3 transition-colors duration-300"
+                style={{
+                  borderColor: "var(--color-border)",
+                  backgroundColor: "var(--color-bg)",
+                }}
+              >
                 <Avatar name={m.name} hue={m.avatarHue} />
-                <div className="font-semibold text-[#0F172A]">{m.name}</div>
-                <button onClick={() => removeMember(m.id)} className="ml-auto text-[#EF4444] hover:underline">
+                <div
+                  className="font-semibold"
+                  style={{ color: "var(--color-text)" }}
+                >
+                  {m.name}
+                </div>
+                <button
+                  onClick={() => removeMember(m.id)}
+                  className="ml-auto hover:underline"
+                  style={{ color: "#EF4444" }}
+                >
                   Remove
                 </button>
               </div>
@@ -122,35 +179,74 @@ export const CreatePiggybank: React.FC<CreateProps> = ({
           </div>
         </div>
 
-        {/* Rules */}
-        <div className="rounded-3xl bg-white border border-[#E2E8F0] shadow-sm p-6 space-y-4">
-          <h3 className="text-lg font-semibold text-[#0F172A]">Rules</h3>
+        {/* Rules Card */}
+        <div
+          className="rounded-3xl shadow-sm border p-6 space-y-4 transition-colors duration-300"
+          style={{
+            backgroundColor: "var(--color-surface)",
+            borderColor: "var(--color-border)",
+          }}
+        >
+          <h3
+            className="text-lg font-semibold"
+            style={{ color: "var(--color-text)" }}
+          >
+            Rules
+          </h3>
           <Divider />
           <div className="grid md:grid-cols-5 gap-4">
             <Field label="Type" className="md:col-span-2">
-              <Select value={ruleType} onChange={(e) => setRuleType(e.target.value as RuleType)}>
+              <Select
+                value={ruleType}
+                onChange={(e) => setRuleType(e.target.value as RuleType)}
+              >
                 <option value="WORD_BAN">Word ban</option>
                 <option value="POST_QUOTA">Post quota</option>
                 <option value="CUSTOM">Custom</option>
               </Select>
             </Field>
+
             {ruleType === "WORD_BAN" && (
-              <Field label="Banned words" className="md:col-span-3" hint="Comma-separated">
-                <Input value={bannedWords} onChange={(e) => setBannedWords(e.target.value)} />
+              <Field
+                label="Banned words"
+                className="md:col-span-3"
+                hint="Comma-separated"
+              >
+                <Input
+                  value={bannedWords}
+                  onChange={(e) => setBannedWords(e.target.value)}
+                />
               </Field>
             )}
+
             {ruleType === "POST_QUOTA" && (
               <Field label="Min posts/week" className="md:col-span-3">
-                <Input type="number" min={1} max={100} value={minPosts} onChange={(e) => setMinPosts(parseInt(e.target.value || "0"))} />
+                <Input
+                  type="number"
+                  min={1}
+                  max={100}
+                  value={minPosts}
+                  onChange={(e) => setMinPosts(parseInt(e.target.value || "0"))}
+                />
               </Field>
             )}
+
             {ruleType === "CUSTOM" && (
               <Field label="Description" className="md:col-span-3">
-                <Input value={customDesc} onChange={(e) => setCustomDesc(e.target.value)} />
+                <Input
+                  value={customDesc}
+                  onChange={(e) => setCustomDesc(e.target.value)}
+                />
               </Field>
             )}
+
             <Field label="Penalty (ETH)" className="md:col-span-2">
-              <Input type="number" step={0.001} value={penalty} onChange={(e) => setPenalty(parseFloat(e.target.value || "0"))} />
+              <Input
+                type="number"
+                step={0.001}
+                value={penalty}
+                onChange={(e) => setPenalty(parseFloat(e.target.value || "0"))}
+              />
             </Field>
             <div className="md:col-span-5">
               <Button variant="secondary" onClick={addRule}>
@@ -162,10 +258,28 @@ export const CreatePiggybank: React.FC<CreateProps> = ({
           {rules.length > 0 && (
             <div className="mt-4 space-y-3">
               {rules.map((r) => (
-                <div key={r.id} className="flex items-center gap-3 p-3 rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC]">
+                <div
+                  key={r.id}
+                  className="flex items-center gap-3 p-3 rounded-2xl border transition-colors duration-300"
+                  style={{
+                    borderColor: "var(--color-border)",
+                    backgroundColor: "var(--color-bg)",
+                  }}
+                >
                   <Pill>{r.label}</Pill>
-                  <span className="text-sm text-[#64748B]">Penalty: {formatEth(r.penaltyEth)}</span>
-                  <button onClick={() => setRules((prev) => prev.filter((x) => x.id !== r.id))} className="ml-auto text-[#EF4444] hover:underline">
+                  <span
+                    className="text-sm"
+                    style={{ color: "var(--color-muted-text)" }}
+                  >
+                    Penalty: {formatEth(r.penaltyEth)}
+                  </span>
+                  <button
+                    onClick={() =>
+                      setRules((prev) => prev.filter((x) => x.id !== r.id))
+                    }
+                    className="ml-auto hover:underline"
+                    style={{ color: "#EF4444" }}
+                  >
                     Remove
                   </button>
                 </div>
@@ -175,11 +289,25 @@ export const CreatePiggybank: React.FC<CreateProps> = ({
         </div>
       </div>
 
-      {/* Summary */}
+      {/* Right: Summary */}
       <div className="lg:col-span-1 space-y-4">
-        <div className="sticky top-24 rounded-3xl bg-white border border-[#E2E8F0] shadow-sm p-6">
-          <h4 className="font-semibold text-[#0F172A] mb-2">Summary</h4>
-          <div className="text-sm text-[#334155] space-y-1">
+        <div
+          className="sticky top-24 rounded-3xl shadow-sm border p-6 transition-colors duration-300"
+          style={{
+            backgroundColor: "var(--color-surface)",
+            borderColor: "var(--color-border)",
+          }}
+        >
+          <h4
+            className="font-semibold mb-2"
+            style={{ color: "var(--color-text)" }}
+          >
+            Summary
+          </h4>
+          <div
+            className="text-sm space-y-1"
+            style={{ color: "var(--color-muted-text)" }}
+          >
             <div><b>Name:</b> {name || "—"}</div>
             <div><b>Theme:</b> {theme || "—"}</div>
             <div><b>Members:</b> {members.length}</div>
@@ -188,13 +316,23 @@ export const CreatePiggybank: React.FC<CreateProps> = ({
           </div>
           <Divider />
           <div className="flex gap-3">
-            <Button variant="secondary" onClick={onCancel} className="w-1/2">Cancel</Button>
-            <Button variant="primary" onClick={handleCreate} disabled={!canCreate} className="w-1/2">
+            <Button variant="secondary" onClick={onCancel} className="w-1/2">
+              Cancel
+            </Button>
+            <Button
+              variant="primary"
+              onClick={handleCreate}
+              disabled={!canCreate}
+              className="w-1/2"
+            >
               Create
             </Button>
           </div>
           {!canCreate && (
-            <p className="text-xs text-[#64748B] mt-2">
+            <p
+              className="text-xs mt-2"
+              style={{ color: "var(--color-muted-text)" }}
+            >
               Add 2+ members, 1+ rule, and a name (≥ 3 chars).
             </p>
           )}

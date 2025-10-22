@@ -8,7 +8,10 @@ const fieldVariants = cva("space-y-2", {
   variants: {
     variant: {
       default: "",
-      soft: "bg-[#F8FAFC] rounded-xl p-3",
+      soft: cn(
+        "rounded-xl p-3 transition-colors duration-300",
+        "bg-[var(--color-accent-bg)]"
+      ),
       minimal: "space-y-1",
     },
   },
@@ -26,9 +29,21 @@ export const Field = React.forwardRef<HTMLDivElement, FieldProps>(
   ({ label, hint, variant, className, children, ...props }, ref) => {
     return (
       <div ref={ref} className={cn(fieldVariants({ variant, className }))} {...props}>
-        <label className="block text-sm font-semibold text-[#0F172A]">{label}</label>
+        <label
+          className="block text-sm font-semibold transition-colors"
+          style={{ color: "var(--color-text)" }}
+        >
+          {label}
+        </label>
         {children}
-        {hint && <p className="text-xs text-[#64748B]">{hint}</p>}
+        {hint && (
+          <p
+            className="text-xs transition-colors"
+            style={{ color: "var(--color-muted-text)" }}
+          >
+            {hint}
+          </p>
+        )}
       </div>
     );
   }

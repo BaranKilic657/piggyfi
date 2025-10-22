@@ -885,13 +885,32 @@ export default function PiggybankMiniApp() {
                 <PiggyCard key={p.id} piggy={p} onOpen={() => { setActive(p); setView("detail"); }} />
               ))}
               <button
-                onClick={() => setView("create")}
-                className="rounded-2xl p-5 border-dashed border-2 border-[#C7D2FE] text-left bg-white hover:shadow-md transition"
+              onClick={() => setView("create")}
+              className="rounded-2xl p-5 border-dashed border-2 text-left hover:shadow-md transition"
+              style={{
+                backgroundColor: "var(--color-surface)",
+                borderColor: "var(--color-border)",
+              }}
+            >
+              <div
+                className="text-sm"
+                style={{ color: "var(--color-muted-text)" }}
               >
-                <div className="text-sm text-[#64748B]">Start a new one</div>
-                <div className="font-bold text-lg text-[#0F172A]">Create a Piggybank</div>
-                <p className="text-[#64748B] mt-2 text-sm">Define rules, invite friends, stake, and compete.</p>
-              </button>
+                Start a new one
+              </div>
+              <div
+                className="font-bold text-lg"
+                style={{ color: "var(--color-text)" }}
+              >
+                Create a Piggybank
+              </div>
+              <p
+                className="mt-2 text-sm"
+                style={{ color: "var(--color-muted-text)" }}
+              >
+                Define rules, invite friends, stake, and compete.
+              </p>
+            </button>
             </div>
           </>
         )}

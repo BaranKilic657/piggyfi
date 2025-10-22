@@ -63,21 +63,30 @@ export const PiggyDetail: React.FC<PiggyDetailProps> = ({
   const settleAndPickWinner = () => {
     const sorted = [...local.members].sort((a, b) => a.breaks - b.breaks);
     const winner = sorted[0];
-    alert(`${winner.name} wins ${formatEth(local.potEth)}! (Simulated onchain settle)`);
+    alert(`${winner.name} wins ${formatEth(local.potEth)}! (Simulated on-chain settle)`);
   };
 
   const DisciplineScore: React.FC<{ m: Member }> = ({ m }) => {
     const maxBreaks = Math.max(1, ...local.members.map((x) => x.breaks));
     const pct = 100 - Math.round((m.breaks / maxBreaks) * 100);
     return (
-      <div className="text-xs text-[#64748B]">
-        discipline: <span className="font-semibold text-[#0F172A]">{pct}</span>
+      <div
+        className="text-xs transition-colors"
+        style={{ color: "var(--color-muted-text)" }}
+      >
+        discipline:{" "}
+        <span
+          className="font-semibold"
+          style={{ color: "var(--color-text)" }}
+        >
+          {pct}
+        </span>
       </div>
     );
   };
 
   return (
-    <div className="relative">
+    <div className="relative transition-colors duration-300" style={{ color: "var(--color-text)" }}>
       <CoinsRain count={16} triggerKey={rainKey} />
 
       {/* Header */}
@@ -85,11 +94,15 @@ export const PiggyDetail: React.FC<PiggyDetailProps> = ({
         <div className="flex items-center gap-4">
           <button
             onClick={onBack}
-            className="text-[#0052FF] hover:underline text-sm sm:text-base"
+            className="text-sm sm:text-base hover:underline"
+            style={{ color: "var(--color-gradient-light)" }}
           >
             ← Back
           </button>
-          <h2 className="text-xl sm:text-2xl font-bold text-[#0F172A]">
+          <h2
+            className="text-xl sm:text-2xl font-bold transition-colors"
+            style={{ color: "var(--color-text)" }}
+          >
             {local.name}
           </h2>
         </div>
@@ -104,14 +117,22 @@ export const PiggyDetail: React.FC<PiggyDetailProps> = ({
         </div>
       </div>
 
-      {/* Main Grid */}
+      {/* Grid */}
       <div className="grid lg:grid-cols-3 gap-8">
-        {/* Members / Leaderboard / Infractions */}
+        {/* Leaderboard + Infractions */}
         <div className="lg:col-span-2 space-y-6">
           {/* Leaderboard */}
-          <div className="rounded-3xl bg-white border border-[#E2E8F0] shadow-sm p-6">
+          <div
+            className="rounded-3xl shadow-sm border p-6 transition-colors duration-300"
+            style={{
+              backgroundColor: "var(--color-surface)",
+              borderColor: "var(--color-border)",
+            }}
+          >
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-[#0F172A]">Leaderboard</h3>
+              <h3 className="text-lg font-semibold" style={{ color: "var(--color-text)" }}>
+                Leaderboard
+              </h3>
               <Pill tone="neutral">
                 Leader: <b className="ml-1">{leader?.name}</b>
               </Pill>
@@ -123,19 +144,41 @@ export const PiggyDetail: React.FC<PiggyDetailProps> = ({
                 .map((m, idx) => (
                   <div
                     key={m.id}
-                    className="flex items-center gap-3 p-3 rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC]"
+                    className="flex items-center gap-3 p-3 rounded-2xl border transition-colors duration-300"
+                    style={{
+                      backgroundColor: "var(--color-bg)",
+                      borderColor: "var(--color-border)",
+                    }}
                   >
-                    <div className="w-6 text-center font-bold text-[#94A3B8]">{idx + 1}</div>
+                    <div
+                      className="w-6 text-center font-bold"
+                      style={{ color: "var(--color-muted-text)" }}
+                    >
+                      {idx + 1}
+                    </div>
                     <Avatar name={m.name} hue={m.avatarHue} />
                     <div className="min-w-0">
-                      <div className="font-semibold text-[#0F172A] truncate">
+                      <div
+                        className="font-semibold truncate"
+                        style={{ color: "var(--color-text)" }}
+                      >
                         {m.name}
                       </div>
                       <DisciplineScore m={m} />
                     </div>
                     <div className="ml-auto text-right">
-                      <div className="text-xs text-[#64748B]">breaks</div>
-                      <div className="font-semibold text-[#0F172A]">{m.breaks}</div>
+                      <div
+                        className="text-xs"
+                        style={{ color: "var(--color-muted-text)" }}
+                      >
+                        breaks
+                      </div>
+                      <div
+                        className="font-semibold"
+                        style={{ color: "var(--color-text)" }}
+                      >
+                        {m.breaks}
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -143,11 +186,21 @@ export const PiggyDetail: React.FC<PiggyDetailProps> = ({
           </div>
 
           {/* Infractions */}
-          <div className="rounded-3xl bg-white border border-[#E2E8F0] shadow-sm p-6">
-            <h3 className="text-lg font-semibold text-[#0F172A]">Infractions</h3>
+          <div
+            className="rounded-3xl shadow-sm border p-6 transition-colors duration-300"
+            style={{
+              backgroundColor: "var(--color-surface)",
+              borderColor: "var(--color-border)",
+            }}
+          >
+            <h3 className="text-lg font-semibold" style={{ color: "var(--color-text)" }}>
+              Infractions
+            </h3>
             <Divider />
             {local.infractions.length === 0 ? (
-              <div className="text-[#64748B]">No infractions yet. Keep it clean! ✨</div>
+              <div style={{ color: "var(--color-muted-text)" }}>
+                No infractions yet. Keep it clean! ✨
+              </div>
             ) : (
               <div className="space-y-3">
                 {local.infractions.map((i) => {
@@ -156,14 +209,21 @@ export const PiggyDetail: React.FC<PiggyDetailProps> = ({
                   return (
                     <div
                       key={i.id}
-                      className="flex items-center gap-3 p-3 rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC]"
+                      className="flex items-center gap-3 p-3 rounded-2xl border transition-colors duration-300"
+                      style={{
+                        backgroundColor: "var(--color-bg)",
+                        borderColor: "var(--color-border)",
+                      }}
                     >
                       <Avatar name={member.name} hue={member.avatarHue} />
                       <div className="min-w-0">
                         <div className="text-sm">
                           <b>{member.name}</b> broke <b>{rule.label}</b>
                         </div>
-                        <div className="text-xs text-[#64748B]">
+                        <div
+                          className="text-xs"
+                          style={{ color: "var(--color-muted-text)" }}
+                        >
                           {new Date(i.timestamp).toLocaleString()} • {i.notes || "—"}
                         </div>
                       </div>
@@ -178,19 +238,37 @@ export const PiggyDetail: React.FC<PiggyDetailProps> = ({
           </div>
         </div>
 
-        {/* Sidebar: Rules / Pot */}
+        {/* Sidebar */}
         <div className="lg:col-span-1 space-y-6">
-          <div className="rounded-3xl bg-white border border-[#E2E8F0] shadow-sm p-6">
-            <h3 className="text-lg font-semibold text-[#0F172A]">Rules</h3>
+          {/* Rules */}
+          <div
+            className="rounded-3xl shadow-sm border p-6 transition-colors duration-300"
+            style={{
+              backgroundColor: "var(--color-surface)",
+              borderColor: "var(--color-border)",
+            }}
+          >
+            <h3 className="text-lg font-semibold" style={{ color: "var(--color-text)" }}>
+              Rules
+            </h3>
             <Divider />
             <div className="space-y-3">
               {local.rules.map((r) => (
                 <div
                   key={r.id}
-                  className="p-3 rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC]"
+                  className="p-3 rounded-2xl border transition-colors duration-300"
+                  style={{
+                    backgroundColor: "var(--color-bg)",
+                    borderColor: "var(--color-border)",
+                  }}
                 >
-                  <div className="font-semibold text-[#0F172A]">{r.label}</div>
-                  <div className="text-xs text-[#64748B]">
+                  <div className="font-semibold" style={{ color: "var(--color-text)" }}>
+                    {r.label}
+                  </div>
+                  <div
+                    className="text-xs"
+                    style={{ color: "var(--color-muted-text)" }}
+                  >
                     {r.type === "WORD_BAN" && (
                       <>Banned: {r.config.bannedWords?.join(", ") || "(none)"} </>
                     )}
@@ -207,20 +285,40 @@ export const PiggyDetail: React.FC<PiggyDetailProps> = ({
             </div>
           </div>
 
-          <div className="rounded-3xl bg-white border border-[#E2E8F0] shadow-sm p-6">
-            <h3 className="text-lg font-semibold text-[#0F172A]">Pot</h3>
+          {/* Pot */}
+          <div
+            className="rounded-3xl shadow-sm border p-6 transition-colors duration-300"
+            style={{
+              backgroundColor: "var(--color-surface)",
+              borderColor: "var(--color-border)",
+            }}
+          >
+            <h3 className="text-lg font-semibold" style={{ color: "var(--color-text)" }}>
+              Pot
+            </h3>
             <Divider />
             <div className="flex items-center gap-3">
               <PiggyBankSVG className="w-12 h-12 sm:w-14 sm:h-14" />
               <div>
-                <div className="text-xs text-[#64748B]">Total</div>
-                <div className="text-xl sm:text-2xl font-extrabold text-[#0F172A]">
+                <div
+                  className="text-xs"
+                  style={{ color: "var(--color-muted-text)" }}
+                >
+                  Total
+                </div>
+                <div
+                  className="text-xl sm:text-2xl font-extrabold"
+                  style={{ color: "var(--color-text)" }}
+                >
                   {formatEth(local.potEth)}
                 </div>
               </div>
             </div>
-            <p className="text-xs text-[#64748B] mt-2">
-              *Onchain deposits update this pot in real time.
+            <p
+              className="text-xs mt-2"
+              style={{ color: "var(--color-muted-text)" }}
+            >
+              *On-chain deposits update this pot in real time.
             </p>
           </div>
         </div>
